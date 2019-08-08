@@ -15,7 +15,7 @@ function App() {
         <div>
           <Navbar/>
           <Route exact path="/" component={Home} />
-          <Route path="/agregar" component={Episodes} />
+          <Route path="/episodes" component={Episodes} />
         </div>
       </BrowserRouter>
     </div>

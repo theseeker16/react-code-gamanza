@@ -1,6 +1,8 @@
 import React from 'react';
+import Chracter  from '../../containers/chracters/character';
+
 export default () => (
     <div>
-        Home
+        <Chracter />
     </div>
 );
