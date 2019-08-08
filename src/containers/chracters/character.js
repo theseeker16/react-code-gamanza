@@ -9,36 +9,49 @@ class Character extends Component {
 
     this.state = {
       characters: [],
+      offset: 0,
       visible: 6,
     }
 
     this.loadMore = this.loadMore.bind(this);
   }
 
-  loadMore = () => {
-    this.setState((prev) => {
+  loadMore = async () => {
+    await this.setState((prev) => {
       console.log(prev);
-      return {visible: prev.visible + 6}
+      return {offset: prev.offset + 6, visible: prev.visible + 6}
     })
+    this.getData();
+
   }
 
   componentDidMount() {
+    this.getData();
+  }
 
-    Axios.get('https://breakingbadapi.com/api/characters')
-      .then(result => {
-          this.setState({characters: result.data});
-      })
+  getData(){
+    let visitble = this.state.visible;
+    let offsetChar = this.state.offset;
+    Axios.get('https://breakingbadapi.com/api/characters',{
+      params: {
+        limit:visitble,offset:offsetChar
+      }
+    })
+    .then(result => {
+      console.log(result);
+        this.setState({characters: result.data});
+    })
   }
 
   render () {
-    const characters = this.state.characters.slice(0,this.state.visible).map(character => {
+    const characters = this.state.characters.map(character => {
       return (<CharacterPost key={character.char_id}
         img={character.img}
         name={character.name}
         occupation={character.occupation}
         status={character.status}
         birthday={character.birthday}
-       portrayed={character.portrayed}/>
+        portrayed={character.portrayed}/>
       )
     });
     return (
@@ -46,7 +59,7 @@ class Character extends Component {
         <div className="row">
           {characters}
         </div>
-        {this.state.visible < this.state.characters.length &&
+        {this.state.offset < this.state.characters.length &&
         <button onClick={this.loadMore} type="button" className="load-more">Load more</button>}
       </div>
 
