@@ -1,12 +1,12 @@
 import React from 'react';
-import Route from 'react-router-dom/Route'
-
 import './App.css';
 import Home from './components/home/home'
 import Episodes from './components/pages/episodes'
 import Navbar from "./components/navbar/navbar"
 
 import { BrowserRouter } from 'react-router-dom'
+
+const Route = require("react-router-dom").Route
 
 function App() {
   return (
